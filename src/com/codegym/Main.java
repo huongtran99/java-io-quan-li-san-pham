@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     static Scanner scanner = new Scanner(System.in);
-    static ProductManager productManager = new ProductManager();
+    public static ProductManager productManager = new ProductManager();
 
     public static void main(String[] args) {
         int choice;
@@ -26,6 +26,9 @@ public class Main {
                     readDataToFile();
                     break;
                 }
+                case 3: {
+                    searchProduct();
+                }
                 case 0: {
                     System.out.println("Bye");
                     break;
@@ -34,14 +37,25 @@ public class Main {
         } while (choice != 0);
     }
 
+    public static void searchProduct() {
+        System.out.print("Nhập mã sản phẩm cần tìm: ");
+        int productId = scanner.nextInt();
+        int index = productManager.findProductById(productId);
+        if(index != -1) {
+            System.out.println("Sản phẩm bạn cần tìm là");
+            System.out.println(productManager.getProduct().get(index));
+        } else {
+            System.out.println("Không tìm thấy");
+        }}
+
     public static void writeDataToFile(){
         addProduct();
         ArrayList<Product> products = productManager.getProduct();
-        writeToFile("student.txt", products);
+        writeToFile("product.txt", products);
     }
 
     public static void readDataToFile() {
-        ArrayList<Product> productsDataFromFile = readDataFromFile("student.txt");
+        ArrayList<Product> productsDataFromFile = readDataFromFile("product.txt");
         for (Product products : productsDataFromFile){
             System.out.println(products);
         }
